@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        max-width: 100%;
+      }
+      main {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-row: 1fr;
+        gap: 5px;
+      }
+      article {
+        border: 2px solid orange;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Persongalleri</h1>
+
+      <template>
+        <article>
+          <img src="" alt="" class="billede" />
+          <h2 class="navn"></h2>
+          <p class="titel"></p>
+          <p class="troende"></p>
+        </article>
+      </template>
+    </main>
+    <script>
+      // henter json-array fra restdb i stedet for lokal .json-fil
+      const url = "https://persongalleri-5d3e.restdb.io/rest/persongalleri";
+      const key = "600fe9211346a1524ff12e31";
+      const options = {
+        headers: {
+          "x-apikey": key,
+        },
+      };
+
+      let personer;
+      let filter = "ja";
+
+      // Henter json-data fra restdb via fetch()
+      async function hentData() {
+        const respons = await fetch(url, options);
+        personer = await respons.json();
+        console.log("Personer", personer);
+        visPersoner();
+      }
+
+      const main = document.querySelector("main");
+      const template = document.querySelector("template").content;
+
+      // loop'er gennem alle personer i json-arrayet og viser dem hvis de er troende
+      function visPersoner() {
+        console.log("visPersoner");
+        // for hver person i arrayet, skal der tjekkes om de er troende og derefter vises i DOM'en
+        personer.forEach((person) => {
+          if (filter == person.troende) {
+            const klon = template.cloneNode(true);
+            klon.querySelector(".billede").src = "faces/" + person.billede;
+            klon.querySelector(".navn").textContent =
+              person.fornavn + " " + person.efternavn;
+            klon.querySelector(".titel").textContent = person.titel;
+            klon.querySelector(".troende").textContent =
+              "Troende: " + person.troende;
+            main.appendChild(klon);
+          }
+        });
+      }
+
+      hentData();
+    </script>
+  </body>
+</html>
