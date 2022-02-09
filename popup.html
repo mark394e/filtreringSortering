@@ -139,6 +139,7 @@
       const main = document.querySelector("main");
       const template = document.querySelector("template").content;
       const popup = document.querySelector("#popup");
+      const article = document.querySelector("article");
 
       // loop'er gennem alle personer i json-arrayet
       function visPersoner() {
@@ -165,6 +166,7 @@
       function visDetaljer(person){
           console.log(person);
           popup.style.display = "block";
+          article.style.cursor = "default";
           popup.querySelector("img").src = "faces/" + person.billede;
           popup.querySelector("h2").textContent = person.fornavn + " " + person.efternavn;
           popup.querySelector(".titel").textContent = person.titel;
@@ -173,6 +175,8 @@
           popup.querySelector(".hobby").textContent = person.hobby;
           popup.querySelector(".tro").textContent = person.troende;
       }
+
+      document.querySelector("#luk").addEventListener("click", () => popup.style.display = "none");
 
       hentData();
     </script>
