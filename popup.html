@@ -24,6 +24,7 @@
       article {
         border: 2px solid orange;
         padding: 10px;
+        cursor: pointer;
       }
 
       .valgt {
@@ -32,7 +33,7 @@
       }
 
       #popup{
-          /* display:none; */
+          display:none;
           position: fixed;
           left: 0;
           top: 0;
@@ -137,6 +138,7 @@
 
       const main = document.querySelector("main");
       const template = document.querySelector("template").content;
+      const popup = document.querySelector("#popup");
 
       // loop'er gennem alle personer i json-arrayet
       function visPersoner() {
@@ -154,9 +156,22 @@
             klon.querySelector(".titel").textContent = person.titel;
             klon.querySelector(".troende").textContent =
               "Troende: " + person.troende;
+              klon.querySelector("article").addEventListener("click", () => visDetaljer(person));
             main.appendChild(klon);
           }
         });
+      }
+
+      function visDetaljer(person){
+          console.log(person);
+          popup.style.display = "block";
+          popup.querySelector("img").src = "faces/" + person.billede;
+          popup.querySelector("h2").textContent = person.fornavn + " " + person.efternavn;
+          popup.querySelector(".titel").textContent = person.titel;
+          popup.querySelector(".email").textContent = person.email;
+          popup.querySelector(".fdag").textContent = person.fødselsdag;
+          popup.querySelector(".hobby").textContent = person.hobby;
+          popup.querySelector(".tro").textContent = person.troende;
       }
 
       hentData();
