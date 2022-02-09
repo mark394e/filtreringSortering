@@ -32,7 +32,7 @@
       }
 
       #popup{
-          display:none;
+          /* display:none; */
           position: fixed;
           left: 0;
           top: 0;
@@ -40,6 +40,7 @@
           height: 100vh;
           background-color: rgba(0,0,0,0.8);
           overflow: scroll;
+          
       }
 
       #popup article{
@@ -49,9 +50,18 @@
           border-radius: 25px;
           padding: 12px;
           background-color: white;
+          flex-direction: column;
+          align-items: center;
       }
 
-    
+      #luk{
+          position: fixed;
+          padding: 1em;
+          font-size: 1.7em;
+          font-weight: bolder;
+          color:white;
+          cursor: pointer;
+      }
     </style>
   </head>
   <body>
